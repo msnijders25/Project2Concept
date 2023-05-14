@@ -15,20 +15,20 @@ import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
 
-    private VBox chatItems;
+    private VBox chats;
     private VBox chatContainer;
     private TextArea chatTextArea;
-    private TextArea inputTextArea;
+    private TextArea inputText;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         BorderPane root = new BorderPane();
 
-        chatItems = new VBox();
-        chatItems.setPrefWidth(200);
-        chatItems.setSpacing(5);
+        chats = new VBox();
+        chats.setPrefWidth(200);
+        chats.setSpacing(5);
 
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 13; i++) {
             addChatItem();
         }
 
@@ -41,33 +41,32 @@ public class HelloApplication extends Application {
         chatTextArea = new TextArea();
         chatTextArea.setPrefSize(600, 530);
 
-        inputTextArea = new TextArea();
-        inputTextArea.setPrefSize(600, 50);
-        inputTextArea.setPromptText("Type your message...");
+        inputText = new TextArea();
+        inputText.setPrefSize(600, 50);
+        inputText.setPromptText("Type een bericht...");
 
-        // Event handler for handling the Enter key press
-        inputTextArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        inputText.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER && !event.isShiftDown()) {
                     event.consume(); // Prevents a new line from being added to the text area
-                    String message = inputTextArea.getText().trim(); // Get the entered message
+                    String message = inputText.getText().trim(); // Get the entered message
                     if (!message.isEmpty()) {
                         // Process the entered message (e.g., send it, display it in the chat, etc.)
                         chatTextArea.appendText("You: " + message + "\n");
-                        inputTextArea.clear(); // Clear the input area after sending the message
+                        inputText.clear(); // Clear the input area after sending the message
                     }
                 }
             }
         });
 
-        inputContainer.getChildren().addAll(inputTextArea);
+        inputContainer.getChildren().addAll(inputText);
         chatContainer.getChildren().addAll(chatTextArea, inputContainer);
 
-        chatItems.getStyleClass().add("chat-items");
+        chats.getStyleClass().add("chat-items");
         chatContainer.getStyleClass().add("chat-container");
 
-        root.setLeft(chatItems);
+        root.setLeft(chats);
         root.setCenter(chatContainer);
 
         Scene scene = new Scene(root, 800, 600);
@@ -84,9 +83,9 @@ public class HelloApplication extends Application {
         item.setStyle("-fx-control-inner-background: #333333;");
         item.setOnMouseClicked(event -> {
             chatTextArea.clear();
-            chatTextArea.appendText("Clicked on: " + item.getText() + "\n");
+            chatTextArea.appendText("Geklikt op: " + item.getText() + "\n");
         });
-        chatItems.getChildren().add(item);
+        chats.getChildren().add(item);
     }
 
     public static void main(String args[]) {
