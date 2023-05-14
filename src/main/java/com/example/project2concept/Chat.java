@@ -1,3 +1,5 @@
+package com.example.project2concept;
+
 import java.util.ArrayList;
 
 class Chat {

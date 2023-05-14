@@ -1,3 +1,7 @@
+package com.example.project2concept;
+
+import com.example.project2concept.Chat;
+
 import java.util.ArrayList;
 
 class Gebruiker {
