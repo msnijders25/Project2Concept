@@ -1,5 +1,4 @@
 package com.example.project2concept;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -12,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
 public class HelloApplication extends Application {
 
@@ -19,6 +19,8 @@ public class HelloApplication extends Application {
     private VBox chatContainer;
     private TextArea chatTextArea;
     private TextArea inputText;
+    private Button addButton;
+    private Button sendButton; // Declare the send button
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -69,6 +71,9 @@ public class HelloApplication extends Application {
         root.setLeft(chats);
         root.setCenter(chatContainer);
 
+        createAddButton(); // Add the add button
+        createSendButton(); // Add the send button
+
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add("styles.css"); // Add custom CSS styles if needed
 
@@ -86,6 +91,35 @@ public class HelloApplication extends Application {
             chatTextArea.appendText("Geklikt op: " + item.getText() + "\n");
         });
         chats.getChildren().add(item);
+    }
+
+    private void createAddButton() {
+        addButton = new Button("Add");
+        addButton.setOnAction(event -> {
+            addChatItem();
+        });
+
+        VBox buttonContainer = new VBox();
+        buttonContainer.setSpacing(5);
+        buttonContainer.getChildren().add(addButton);
+
+        chats.getChildren().add(buttonContainer);
+    }
+
+    private void createSendButton() {
+        sendButton = new Button("Send");
+        sendButton.setOnAction(event -> {
+            String message = inputText.getText().trim();
+            if (!message.isEmpty()) {
+                chatTextArea.appendText("You: " + message + "\n");
+                inputText.clear();
+            }
+        });
+        HBox buttonContainer = new HBox();
+        buttonContainer.setSpacing(5);
+        buttonContainer.getChildren().add(sendButton);
+
+        chatContainer.getChildren().add(buttonContainer);
     }
 
     public static void main(String args[]) {

@@ -37,5 +37,7 @@ class Chat {
         return chatBerichten;
     }
 
+    private void appendMessage(String s) {
+    }
 
 }
