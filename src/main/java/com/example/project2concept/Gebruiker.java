@@ -5,6 +5,7 @@ import com.example.project2concept.Chat;
 import java.util.ArrayList;
 
 class Gebruiker {
+    private Bedrijf bedrijf;
     private String gebruikersNaam;
     private String wachtWoord;
     private ArrayList<Chat> chats;
