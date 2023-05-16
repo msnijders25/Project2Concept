@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+
 public class HelloApplication extends Application {
 
     private VBox chats;
@@ -20,6 +21,7 @@ public class HelloApplication extends Application {
     private TextArea chatTextArea;
     private TextArea inputText;
 
+    Chat chat = new Chat();
     @Override
     public void start(Stage primaryStage) throws Exception {
         BorderPane root = new BorderPane();
@@ -51,6 +53,10 @@ public class HelloApplication extends Application {
                 if (event.getCode() == KeyCode.ENTER && !event.isShiftDown()) {
                     event.consume(); // Prevents a new line from being added to the text area
                     String message = inputText.getText().trim(); // Get the entered message
+                    chat.setChatBerichten(message);
+                    for(String bas : chat.getChatBerichten()){
+                        System.out.println(bas);
+                    }
                     if (!message.isEmpty()) {
                         // Process the entered message (e.g., send it, display it in the chat, etc.)
                         chatTextArea.appendText("You: " + message + "\n");
