@@ -75,7 +75,7 @@ public class HelloApplication extends Application {
         createSendButton();
 
         Scene scene = new Scene(root, 800, 600);
-        scene.getStylesheets().add("styles.css"); // Add custom CSS styles if needed
+        scene.getStylesheets().add("styles.css");
 
         primaryStage.setTitle("Chat42");
         primaryStage.setScene(scene);
