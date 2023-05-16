@@ -148,7 +148,7 @@ public class HelloApplication extends Application {
         root.setLeft(menuContainer);
 
         Scene chatScene = new Scene(root, 800, 600);
-        chatScene.getStylesheets().add("styles.css"); // Add custom CSS styles if needed
+        chatScene.getStylesheets().add("styles.css");
 
         primaryStage.setTitle("Chat Application");
         primaryStage.setScene(chatScene);
