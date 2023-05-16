@@ -111,7 +111,7 @@ public class HelloApplication extends Application {
 
         chats.getChildren().add(buttonContainer);
     }
-//sendButton
+
     private void createSendButton() {
         sendButton = new Button("Send");
         sendButton.setOnAction(event -> {
