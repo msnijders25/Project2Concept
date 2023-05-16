@@ -4,7 +4,7 @@ import java.util.HashMap;
  abstract class AIAssistent {
 
     HashMap AIberichten;
-    Chat chat;
+
 
     AIAssistent(){
 
