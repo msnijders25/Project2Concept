@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 class Chat {
 
-    AIAssistent AiAssistent;
+    AIAssistent aiAssistent;
     String onderwerp;
     String datum;
     ArrayList<String> chatBerichten;
