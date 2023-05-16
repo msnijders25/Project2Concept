@@ -56,7 +56,7 @@ public class HelloApplication extends Application {
                     if (!message.isEmpty()) {
                         // Process the entered message (e.g., send it, display it in the chat, etc.)
                         chatTextArea.appendText("You: " + message + "\n");
-                        inputText.clear(); // Clear the input area after sending the message
+                        inputText.clear();
                     }
                 }
             }
