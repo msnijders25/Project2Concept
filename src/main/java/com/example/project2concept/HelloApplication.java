@@ -1,5 +1,4 @@
 package com.example.project2concept;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -12,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
 
 public class HelloApplication extends Application {
@@ -20,6 +20,8 @@ public class HelloApplication extends Application {
     private VBox chatContainer;
     private TextArea chatTextArea;
     private TextArea inputText;
+    private Button addButton;
+    private Button sendButton;
 
     Chat chat = new Chat();
     @Override
@@ -58,9 +60,9 @@ public class HelloApplication extends Application {
                         System.out.println(bas);
                     }
                     if (!message.isEmpty()) {
-                        // Process the entered message (e.g., send it, display it in the chat, etc.)
+
                         chatTextArea.appendText("You: " + message + "\n");
-                        inputText.clear(); // Clear the input area after sending the message
+                        inputText.clear();
                     }
                 }
             }
@@ -75,8 +77,11 @@ public class HelloApplication extends Application {
         root.setLeft(chats);
         root.setCenter(chatContainer);
 
+        createAddButton();
+        createSendButton();
+
         Scene scene = new Scene(root, 800, 600);
-        scene.getStylesheets().add("styles.css"); // Add custom CSS styles if needed
+        scene.getStylesheets().add("styles.css");
 
         primaryStage.setTitle("Chat42");
         primaryStage.setScene(scene);
@@ -92,6 +97,35 @@ public class HelloApplication extends Application {
             chatTextArea.appendText("Geklikt op: " + item.getText() + "\n");
         });
         chats.getChildren().add(item);
+    }
+
+    private void createAddButton() {
+        addButton = new Button("Add");
+        addButton.setOnAction(event -> {
+            addChatItem();
+        });
+
+        VBox buttonContainer = new VBox();
+        buttonContainer.setSpacing(5);
+        buttonContainer.getChildren().add(addButton);
+
+        chats.getChildren().add(buttonContainer);
+    }
+//sendButton
+    private void createSendButton() {
+        sendButton = new Button("Send");
+        sendButton.setOnAction(event -> {
+            String message = inputText.getText().trim();
+            if (!message.isEmpty()) {
+                chatTextArea.appendText("You: " + message + "\n");
+                inputText.clear();
+            }
+        });
+        HBox buttonContainer = new HBox();
+        buttonContainer.setSpacing(5);
+        buttonContainer.getChildren().add(sendButton);
+
+        chatContainer.getChildren().add(buttonContainer);
     }
 
     public static void main(String args[]) {
