@@ -54,7 +54,7 @@ public class HelloApplication extends Application {
                     event.consume(); // Prevents a new line from being added to the text area
                     String message = inputText.getText().trim(); // Get the entered message
                     if (!message.isEmpty()) {
-                        // Process the entered message (e.g., send it, display it in the chat, etc.)
+
                         chatTextArea.appendText("You: " + message + "\n");
                         inputText.clear();
                     }
