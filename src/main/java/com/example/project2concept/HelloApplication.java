@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
     private TextArea chatTextArea;
     private TextArea inputText;
     private Button addButton;
-    private Button sendButton; // Declare the send button
+    private Button sendButton;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
