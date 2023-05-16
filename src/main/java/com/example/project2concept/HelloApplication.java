@@ -1,5 +1,5 @@
 package com.example.project2concept;
-mport javafx.application.Application;
+import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
