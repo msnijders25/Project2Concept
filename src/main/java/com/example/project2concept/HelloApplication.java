@@ -71,8 +71,8 @@ public class HelloApplication extends Application {
         root.setLeft(chats);
         root.setCenter(chatContainer);
 
-        createAddButton(); // Add the add button
-        createSendButton(); // Add the send button
+        createAddButton();
+        createSendButton();
 
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add("styles.css"); // Add custom CSS styles if needed
