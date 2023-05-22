@@ -3,6 +3,8 @@ package com.example.project2concept;
 import java.util.ArrayList;
 
 class Chat {
+
+    AIAssistent aiAssistent;
     String onderwerp;
     String datum;
     ArrayList<String> chatBerichten;
@@ -19,7 +21,6 @@ class Chat {
     public String getOnderwerp(){
         return onderwerp;
     }
-
 
     public void setDatum(String datum){
         this.datum = datum;
