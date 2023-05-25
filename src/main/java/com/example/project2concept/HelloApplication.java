@@ -1,87 +1,40 @@
 package com.example.project2concept;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.SplitPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-
 public class HelloApplication extends Application {
-
     private VBox chats;
     private VBox chatContainer;
     private TextArea chatTextArea;
     private TextArea inputText;
-    private Button addButton;
-    private Button sendButton;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Login");
-
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(20));
-        grid.setVgap(10);
-        grid.setHgap(10);
-
-        // Username label and text field
-        Label usernameLabel = new Label("Username:");
-        GridPane.setConstraints(usernameLabel, 0, 0);
-        TextField usernameField = new TextField();
-        GridPane.setConstraints(usernameField, 1, 0);
-
-        // Password label and password field
-        Label passwordLabel = new Label("Password:");
-        GridPane.setConstraints(passwordLabel, 0, 1);
-        PasswordField passwordField = new PasswordField();
-        GridPane.setConstraints(passwordField, 1, 1);
-
-        // Login button
-        Button loginButton = new Button("Log In");
-        GridPane.setConstraints(loginButton, 1, 2);
-
-        // Add all the elements to the grid
-        grid.getChildren().addAll(usernameLabel, usernameField, passwordLabel, passwordField, loginButton);
-
-        // Login button event handler
-        loginButton.setOnAction(e -> {
-            String username = usernameField.getText();
-            String password = passwordField.getText();
-
-            // Perform login validation (dummy example)
-            if (username.equals("admin") && password.equals("password")) {
-                System.out.println("Login successful!");
-                openChatWindow(primaryStage);
-            } else {
-                System.out.println("Invalid username or password. Please try again.");
-            }
-        });
-
-        Scene loginScene = new Scene(grid, 300, 150);
-        primaryStage.setScene(loginScene);
-        primaryStage.show();
-    }
-
-    private void openChatWindow(Stage primaryStage) {
         BorderPane root = new BorderPane();
 
         chats = new VBox();
         chats.setPrefWidth(200);
-        chats.setSpacing(5);
-
-        for (int i = 0; i <= 1; i++) {
-            addChatItem();
-        }
+        chats.setSpacing(10);
 
         chatContainer = new VBox();
-        chatContainer.setSpacing(5);
+        chatContainer.setSpacing(10);
 
         HBox inputContainer = new HBox();
         inputContainer.setSpacing(5);
@@ -91,7 +44,7 @@ public class HelloApplication extends Application {
 
         inputText = new TextArea();
         inputText.setPrefSize(600, 50);
-        inputText.setPromptText("Type a message...");
+        inputText.setPromptText("Type een bericht...");
 
         inputText.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -102,7 +55,7 @@ public class HelloApplication extends Application {
                     if (!message.isEmpty()) {
                         // Process the entered message (e.g., send it, display it in the chat, etc.)
                         chatTextArea.appendText("You: " + message + "\n");
-                        inputText.clear();                         // Clear the input area after sending the message
+                        inputText.clear(); // Clear the input area after sending the message
                     }
                 }
             }
@@ -111,95 +64,114 @@ public class HelloApplication extends Application {
         inputContainer.getChildren().addAll(inputText);
         chatContainer.getChildren().addAll(chatTextArea, inputContainer);
 
-        chats.getStyleClass().add("chat-items");
-        chatContainer.getStyleClass().add("chat-container");
+        Button newChatButton = new Button("New Chat");
+        newChatButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                createNewChat();
+            }
+        });
 
-        root.setCenter(chatContainer);
+        HBox buttonContainer = new HBox(newChatButton);
+        buttonContainer.setSpacing(5);
 
-        createAddButton();
-        createSendButton();
+        root.setTop(buttonContainer);
 
-        // Create the menu
-        VBox menuContainer = new VBox();
-        menuContainer.setSpacing(5);
+        SplitPane splitPane = new SplitPane();
+        splitPane.getItems().addAll(chats, chatContainer);
+        splitPane.setDividerPositions(0.2); // Set the initial divider position
 
+        root.setCenter(splitPane);
+
+        // Create a custom MenuBar
         MenuBar menuBar = new MenuBar();
+        menuBar.getStyleClass().add("chat-menu-bar");
 
-        // Menu File
-        Menu menuFile = new Menu("File");
-        MenuItem fileItem = new MenuItem("Open");
-        menuFile.getItems().add(fileItem);
+        // Create a File menu with Open and Save menu items
+        Menu fileMenu = new Menu("File");
+        fileMenu.getStyleClass().add("chat-menu");
+        MenuItem openMenuItem = new MenuItem("Open");
+        openMenuItem.getStyleClass().add("chat-menu-item");
+        MenuItem saveMenuItem = new MenuItem("Save");
+        saveMenuItem.getStyleClass().add("chat-menu-item");
+        fileMenu.getItems().addAll(openMenuItem, saveMenuItem);
 
-        // Menu Option
-        Menu menuOption = new Menu("Option");
-        MenuItem optionItem = new MenuItem("Settings");
-        menuOption.getItems().add(optionItem);
+        // Create an Edit menu with Copy and Paste menu items
+        Menu editMenu = new Menu("Edit");
+        editMenu.getStyleClass().add("chat-menu");
+        MenuItem copyMenuItem = new MenuItem("Copy");
+        copyMenuItem.getStyleClass().add("chat-menu-item");
+        MenuItem pasteMenuItem = new MenuItem("Paste");
+        pasteMenuItem.getStyleClass().add("chat-menu-item");
+        editMenu.getItems().addAll(copyMenuItem, pasteMenuItem);
 
-        // Menu Edit
-        Menu menuEdit = new Menu("Edit");
-        MenuItem editItem = new MenuItem("Cut");
-        menuEdit.getItems().add(editItem);
+        // Add menus to the MenuBar
+        menuBar.getMenus().addAll(fileMenu, editMenu);
 
-        // Add menus to the menu bar
-        menuBar.getMenus().addAll(menuFile, menuOption, menuEdit);
+        // Position the MenuBar at the left bottom
+        root.setLeft(menuBar);
 
-        menuContainer.getChildren().addAll(chats, menuBar);
-
-        root.setLeft(menuContainer);
-
-        Scene chatScene = new Scene(root, 800, 600);
-        chatScene.getStylesheets().add("styles.css");
-
-        primaryStage.setTitle("Chat Application");
-        primaryStage.setScene(chatScene);
+        Scene scene = new Scene(root, 800, 600);
+        scene.getStylesheets().add("style.css"); // Load custom CSS
+        primaryStage.setTitle("Chat42");
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    private void addChatItem() {
-        TextArea item = new TextArea("New Chat");
+    private void createNewChat() {
+        String chatName = "New Chat"; // Default chat name
+        addChatItem(chatName);
+    }
+
+    private void addChatItem(String chatName) {
+        TextArea item = new TextArea(chatName);
         item.setPrefHeight(20);
         item.setStyle("-fx-control-inner-background: #333333;");
+        item.setEditable(false); // Set the chat name TextArea uneditable
+
+        // Mini button for editing chat name
+        Button editButton = new Button("Edit");
+        editButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                openEditWindow(item);
+            }
+        });
+
+        HBox chatItemContainer = new HBox(item, editButton);
+        chatItemContainer.setSpacing(5);
+
         item.setOnMouseClicked(event -> {
             chatTextArea.clear();
             chatTextArea.appendText("Clicked on: " + item.getText() + "\n");
         });
-        chats.getChildren().add(item);
+        chats.getChildren().add(chatItemContainer);
     }
 
-    private void createAddButton() {
-        addButton = new Button("Add");
-        addButton.setOnAction(event -> {
-            addChatItem();
-        });
+    private void openEditWindow(TextArea chatNameTextArea) {
+        Stage editStage = new Stage();
+        BorderPane editRoot = new BorderPane();
+        TextArea editTextArea = new TextArea(chatNameTextArea.getText());
+        Button saveButton = new Button("Save");
 
-        VBox buttonContainer = new VBox();
-        buttonContainer.setSpacing(5);
-        buttonContainer.getChildren().add(addButton);
-
-        chats.getChildren().add(buttonContainer);
-    }
-
-    private void createSendButton() {
-        sendButton = new Button("Send");
-        sendButton.setOnAction(event -> {
-            String message = inputText.getText().trim();
-            if (!message.isEmpty()) {
-                chatTextArea.appendText("You: " + message + "\n");
-                inputText.clear();
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String updatedName = editTextArea.getText();
+                chatNameTextArea.setText(updatedName);
+                editStage.close();
             }
         });
 
-        HBox buttonContainer = new HBox();
-        buttonContainer.setSpacing(5);
-        buttonContainer.getChildren().add(sendButton);
-
-        chatContainer.getChildren().add(buttonContainer);
+        editRoot.setCenter(editTextArea);
+        editRoot.setBottom(saveButton);
+        Scene editScene = new Scene(editRoot, 300, 200);
+        editStage.setScene(editScene);
+        editStage.setTitle("Edit Chat Name");
+        editStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
         launch(args);
     }
 }
-
-
-

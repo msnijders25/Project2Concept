@@ -1,7 +1,6 @@
 package com.example.project2concept;
 
 import com.example.project2concept.Chat;
-
 import java.util.ArrayList;
 
 class Gebruiker {
@@ -38,4 +37,3 @@ class Gebruiker {
         return chats;
     }
 }
-//dddd
